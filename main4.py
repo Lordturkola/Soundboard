@@ -3,7 +3,7 @@ import pygame
 
 import os
 
-sound_map = {'k':"its_working.wav"}
+sound_map = {'k':"its_working.wav",'n':"no_darth.wav"}
 sound_file_folder = os.path.curdir
 
 def play_sound(keyboardKey):   
@@ -16,12 +16,14 @@ def play_sound(keyboardKey):
         pygame.mixer.music.play()
     except FileNotFoundError as e:
         print(f"File not found to .wav! {e}")
+    except KeyError as e2:
+        print(f"No binding for pressed key: {keyboardKey}")
+
 def on_press(key):
     try:
         print('alphanumeric key {0} pressed'.format(
             key.char))
-        if key.char == 'k':
-            play_sound(key.char)
+        play_sound(key.char)
     except AttributeError:
         print('special key {0} pressed'.format(
             key))
