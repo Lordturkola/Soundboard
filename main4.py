@@ -1,5 +1,6 @@
 from pynput import keyboard
-from playsound import playsound
+import pygame 
+
 import os
 
 sound_map = {'k':"its_working.wav"}
@@ -7,11 +8,12 @@ sound_file_folder = os.path.curdir
 
 def play_sound(keyboardKey):   
         
-    path = os.path.join(sound_file_folder,sound_map[keyboardKey])  
-    print(path)
     try:
-        playsound(path)
-
+        path = os.path.join(sound_file_folder,sound_map[keyboardKey])  
+        print(path)
+        pygame.mixer.init()
+        pygame.mixer.music.load(path)
+        pygame.mixer.music.play()
     except FileNotFoundError as e:
         print(f"File not found to .wav! {e}")
 def on_press(key):
