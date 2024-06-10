@@ -3,7 +3,7 @@ import pygame
 
 import os
 
-sound_map = {'k':"its_working.wav",'n':"no_darth.wav",'v':"varskrik.wav",'b':"bbbad.wav",'f':"lotr_br_q.wav", 'c':"cmon.wav", 'h':"hastalavista_trimmed.wav"}
+sound_map = {'k':"its_working.wav",'n':"no_darth.wav",'v':"varskrik.wav",'b':"bbbad.wav",'f':"lotr_br_q.wav", 'c':"cmon.wav", 'h':"hastalavista_trimmed.wav", 'w':"whatgoingon.wav"}
 sound_file_folder = os.path.curdir
 
 def play_sound(keyboardKey):   
