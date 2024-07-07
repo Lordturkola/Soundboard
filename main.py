@@ -1,10 +1,22 @@
 from pynput import keyboard
 import pygame
-import os
-from mediaEventManager import MediaEventManager
 
-mediaEventManager = MediaEventManager()
-sound_map = {"k": "its_working.wav", "n": "no_darth.wav"}
+import os
+
+sound_map = {
+    "k": "its_working.wav",
+    "n": "no_darth.wav",
+    "v": "varskrik.wav",
+    "b": "bbbad.wav",
+    "f": "lotr_br_q.wav",
+    "c": "cmon.wav",
+    "h": "hastalavista_trimmed.wav",
+    "w": "whatgoingon.wav",
+    "g": "goood.wav",
+    "r": "rockapa.wav",
+    "i": "iwanttobreakfree.wav",
+    "d": "doit.mp3",
+}
 sound_file_folder = os.path.curdir
 
 
@@ -36,13 +48,7 @@ def on_release(key):
         return False
 
 
-def mediaEventCallback():
-    sound_map.update
-
-
 if __name__ == "__main__":
-    # start listening to changes and create media objects
-    mediaEventManager.Start()
     # Collect events until released
     with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
         listener.join()
