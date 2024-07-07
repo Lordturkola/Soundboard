@@ -4,5 +4,4 @@ class MediaItem:
         self.start_time
         self.end_time
         self.key_bindning
-        self.ready
         self.file_path

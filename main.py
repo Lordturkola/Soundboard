@@ -36,6 +36,10 @@ def on_release(key):
         return False
 
 
+def mediaEventCallback():
+    sound_map.update
+
+
 if __name__ == "__main__":
     # start listening to changes and create media objects
     mediaEventManager.Start()

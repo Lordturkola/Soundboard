@@ -44,7 +44,6 @@ class MediaBuilder:
         except:
             # add a digit to it if conflict
             pass
-        return file_path
 
     def convert_media_to_mp4(file_path):
         pass
