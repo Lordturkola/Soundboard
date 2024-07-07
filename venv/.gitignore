@@ -1,4 +1,4 @@
 # ignore everything in venv folder except requirements and ignore file (duh) #
 *
 !.gitignore
-!.requirements.txt
+!requirements.txt
