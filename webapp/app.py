@@ -1,14 +1,26 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import sys
-app = Flask(__name__)
+class WebApp:
+    app = Flask(__name__)
+    def validateUserInput(request_form):
+        return True
 
+    @app.route("/sound/request", methods=['POST'])
+    def userInput():
+        request_form = request.form 
+        del request_form["submitButton"]
 
-@app.route("/")
-def home():
-    return render_template("star.html")
+        validateUserInput(request_form)
 
-def start_server(debugMode=False):
-    app.run(debug=debugMode)
+        print(f"user requested: {request.form.get('videoUrl')}")
+        return render_template("user_request_success.html")
+    
+    @app.get("/")
+    def home():
+        return render_template("index.html")
 
-if __name__ == "__main__":
-    start_server(True)
+    def start_server(debugMode=False):
+        app.run(debug=debugMode, port=1337)
+
+    if __name__ == "__main__":
+        start_server(debugMode=True)
