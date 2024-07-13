@@ -17,11 +17,11 @@ class MediaEventManager:
         # event manager recieves an external request
         # gets populated by incoming ssh messages and/or webrequsts
         self.media_processing_queue = Queue(100)
-        self.previous_amount_of_items = 0
+        self.previous_amount_of_items = 0   
         self.file_polling_interval = 1
 
     def add_to_build_queue(self, new_request):
         try:
             self.media_processing_queue.put_nowait(new_request)
         except Queue.full:
-            print("Queue is full cannot receive another request")
+            print("Queue is full and cannot receive another request")
