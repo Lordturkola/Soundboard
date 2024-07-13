@@ -4,11 +4,6 @@ from mediaItem import MediaItem
 class MediaBuilder:
     def __init__(self, rawMediaItem) -> None:
         self.media_item = self.extract_data(rawMediaItem)
-        self.pipeline = (
-            lambda: self.fetch_url_video,
-            lambda: self.convert_media_to_mp4,
-            lambda: self.trim_media,
-        )
 
     def process(self):
         for stage in self.pipeline:
