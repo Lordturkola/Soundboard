@@ -6,7 +6,7 @@ sys.path.append(os.path.join(current_dir,"model"))
 from mediaItem import MediaItem
     
 class IMediaPipelineItem:    
-    def validate()->None:
+    def validate(mediaItem:MediaItem)->None:
         raise NotImplementedError()
     def process()->MediaItem:
         raise NotImplementedError()

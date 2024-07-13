@@ -1,0 +1,6 @@
+{
+    "python.analysis.extraPaths": [
+        "./pipeline/pipelineItems/interfaces",
+        "./pipeline/pipelineItems/model"
+    ]
+}

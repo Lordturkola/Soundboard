@@ -3,7 +3,6 @@ from pathlib import path
 from time import sleep
 import sys 
 
-
 sys.path.append("webapp")
 # class imports
 from webapp import WebApp 
