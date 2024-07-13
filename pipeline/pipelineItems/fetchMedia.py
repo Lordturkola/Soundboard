@@ -51,7 +51,6 @@ class FetchMedia(IMediaPipelineItem):
 
 
 if __name__ == "__main__":
-
     builditem = FetchMedia(
         MediaItem(
             videourl="https://www.youtube.com/watch?v=rJYaKsbExSo&ab_channel=Blue",
