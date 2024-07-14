@@ -48,11 +48,11 @@ class FetchMedia(IMediaPipelineItem):
 if __name__ == "__main__":
     mediaItem = FetchMedia.process(
         MediaItem(
-            videourl="https://www.youtube.com/watch?v=rJYaKsbExSo&ab_channel=Blue",
+            videourl="https://www.youtube.com/watch?v=4gcs5k8n-FY&ab_channel=SoundEffects",
             start_time=0.0,
-            end_time=3.0,
+            end_time=1.0,
             file_path=None,
-            key_bindning="f",
+            key_bindning="b",
         )
     )
     print(mediaItem.file_path)
