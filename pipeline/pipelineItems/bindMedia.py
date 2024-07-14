@@ -9,6 +9,7 @@ sys.path.append(os.path.join(current_dir, "interfaces"))
 from iMediaPipelineItem import IMediaPipelineItem
 from mediaItem import MediaItem
 
+
 class BindMedia(IMediaPipelineItem):
     def validate(mediaItem: MediaItem) -> None:
         if mediaItem.file_path == None:
@@ -17,7 +18,8 @@ class BindMedia(IMediaPipelineItem):
             raise IOError(f"{__class__}, keybinding required")
 
     def process(mediaItem: MediaItem) -> MediaItem:
-        
+        BindMedia.validate(mediaItem)
+
 
 if __name__ == "__main__":
     mediaItem = FetchMedia.process(

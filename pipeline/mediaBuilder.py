@@ -1,14 +1,13 @@
 from mediaItem import MediaItem
-
+from pipelineItems import fetchMedia
 
 class MediaBuilder:
     def __init__(self, rawMediaItem) -> None:
         self.media_item = self.extract_data(rawMediaItem)
-
+        self.pipeline = [fetchMedia.FetchMedia.process, ]
     def process(self):
-        for stage in self.pipeline:
-            stage()
-        # done building object
+        mediaItem = fetchMedia(self.media_item)
+        
         return self.media_item
 
     def extract_data(self, rawItem):
@@ -31,17 +30,3 @@ class MediaBuilder:
         newMediaItem.end_time = time_interval[1]
 
         return newMediaItem
-
-    def fetch_url_video(self, url):
-        try:
-            # try to save file with generic name
-            pass
-        except:
-            # add a digit to it if conflict
-            pass
-
-    def convert_media_to_mp4(file_path):
-        pass
-
-    def trim_media(start_time, end_time, file_path):
-        pass

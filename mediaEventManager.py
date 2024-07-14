@@ -1,13 +1,14 @@
 from queue import Queue
 from pathlib import path
 from time import sleep
-import sys 
+import sys
 
 sys.path.append("webapp")
 # class imports
-from webapp import WebApp 
+from webapp import WebApp
 from mediaItem import MediaItem
 from mediaBuilder import MediaBuilder
+
 
 class MediaEventManager:
 
@@ -16,7 +17,7 @@ class MediaEventManager:
         # event manager recieves an external request
         # gets populated by incoming ssh messages and/or webrequsts
         self.media_processing_queue = Queue(100)
-        self.previous_amount_of_items = 0   
+        self.previous_amount_of_items = 0
         self.file_polling_interval = 1
 
     def add_to_build_queue(self, new_request):
