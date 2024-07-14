@@ -10,10 +10,11 @@ from iMediaPipelineItem import IMediaPipelineItem
 from mediaItem import MediaItem
 from yt_dlp import YoutubeDL, utils
 
-MEDIA_DIR = os.path.join(dirname(dirname(current_dir)), "media")
+MEDIA_DIR = os.path.join(current_dir, "media")
 
 
 class FetchMedia(IMediaPipelineItem):
+
     def validate(mediaItem: MediaItem) -> None:
         if mediaItem.video_url == None:
             raise IOError(f"{__class__}, url required")
@@ -21,8 +22,12 @@ class FetchMedia(IMediaPipelineItem):
             raise IOError(f"{__class__}, keybinding required")
 
     def process(mediaItem: MediaItem) -> MediaItem:
+        print(
+            f"{__name__}: {mediaItem.key_bindning} {mediaItem.video_url} {mediaItem.start_time} {mediaItem.end_time}"
+        )
         FetchMedia.validate(mediaItem)
         media_folder = os.path.join(MEDIA_DIR, mediaItem.key_bindning)
+        print(media_folder)
         if not os.path.exists(media_folder):
             os.mkdir(media_folder)
 
@@ -41,7 +46,7 @@ class FetchMedia(IMediaPipelineItem):
         }
         with YoutubeDL(params=options) as ytdl:
             error_code = ytdl.download(mediaItem.video_url)
-
+        print("fetch media success")
         return mediaItem
 
 

@@ -1,11 +1,14 @@
-import sys
-from mediaManager import MediaManager
+import sys, os
 
-sys.path.append("webapp")
+current_dir = os.path.abspath(os.path.curdir)
+sys.path.append(os.path.join(current_dir, "pipeline"))
+sys.path.append(os.path.join(current_dir, "pipeline/pipelineItems/model/"))
+sys.path.append(os.path.join(current_dir, "pipeline/pipelineItems/interfaces/"))
 # class imports
-from webapp import WebApp
+from mediaManager import MediaManager
 from mediaItem import MediaItem
 from pipeline.mediaBuilder import MediaBuilder
+from iMediaPipelineItem import IMediaPipelineItem
 
 
 class MediaEventManager:
@@ -25,7 +28,8 @@ class MediaEventManager:
             return False
 
         try:
-            media_item = MediaBuilder(new_request_form)
+            media_item = MediaBuilder(new_request_form).process()
+            print("updating mediamanager...")
             MediaEventManager.update(media_item)
             MediaEventManager.request_counter -= 1
 
@@ -35,3 +39,6 @@ class MediaEventManager:
             return False
 
         return True
+
+    if __name__ == "__main__":
+        pass
