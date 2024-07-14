@@ -34,3 +34,4 @@ if __name__ == "__main__":
     t1 = Thread(target=MediaEventManager.start_media_manager, args=())
     t1.start()
     t1.join()
+    t2.join()

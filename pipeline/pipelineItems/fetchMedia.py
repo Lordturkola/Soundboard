@@ -20,6 +20,8 @@ class FetchMedia(IMediaPipelineItem):
             raise IOError(f"{__class__}, url required")
         if mediaItem.key_bindning == None:
             raise IOError(f"{__class__}, keybinding required")
+        if len(mediaItem.key_bindning) != 1:
+            raise IOError(f"{__class__}, invalid key bindning")
 
     def process(mediaItem: MediaItem) -> MediaItem:
         print(
