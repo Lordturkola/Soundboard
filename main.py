@@ -1,6 +1,8 @@
 import sys, os
 from webapp.app import WebApp
 from mediaEventManager import MediaEventManager
+from threading import Thread
+
 current = os.path.abspath(os.curdir)
 env = os.path.join(current, "environment", "soundboard")
 
@@ -25,9 +27,10 @@ if __name__ == "__main__":
     print(winVenvPath)
     print(linuxVenvPath)
     print(reqs_path)
-    print("installing reqs")
-    #os.system(shell_command["pip"])
-#  
-
-    # MediaEventManager.start_media_manager()
-    # WebApp.start_server(True)
+    os.system(shell_command["cp_win32"])
+    #
+    t2 = Thread(target=WebApp.start_server, args=())
+    t2.start()
+    t1 = Thread(target=MediaEventManager.start_media_manager, args=())
+    t1.start()
+    t1.join()
