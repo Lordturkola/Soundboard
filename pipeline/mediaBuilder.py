@@ -1,16 +1,21 @@
 from mediaItem import MediaItem
-from pipelineItems import fetchMedia
+from pipelineItems.fetchMedia import FetchMedia
+
 
 class MediaBuilder:
-    def __init__(self, rawMediaItem) -> None:
+    def __init__(self, rawMediaItem):
         self.media_item = self.extract_data(rawMediaItem)
-        self.pipeline = [fetchMedia.FetchMedia.process, ]
-    def process(self):
-        mediaItem = fetchMedia(self.media_item)
-        
+        self.pipeline = [
+            FetchMedia,
+        ]
+        return self.process()
+
+    def process(self) -> MediaItem:
+        for pipelineItem in self.pipeline:
+            self.media_item = pipelineItem.process(self.media_item)
         return self.media_item
 
-    def extract_data(self, rawItem):
+    def extract_data(self, rawItem) -> MediaItem:
         parameters = rawItem.strip().split()
         newMediaItem = MediaItem()
         time_interval = []

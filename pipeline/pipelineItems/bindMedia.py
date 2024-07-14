@@ -19,6 +19,7 @@ class BindMedia(IMediaPipelineItem):
 
     def process(mediaItem: MediaItem) -> MediaItem:
         BindMedia.validate(mediaItem)
+        
 
 
 if __name__ == "__main__":

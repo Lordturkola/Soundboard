@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title style="font-style: italic;">
+            Soundboard - a way to cope
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="static/bootstrap.min.css" rel="stylesheet" media="screen">
+    </head>
+    <body>
+        <div class="container">
+            <h1 style="font-style: italic;">Soundboard - a way to cope</h3>
+            <h3>Request a sound to the Soundboard</h3>
+            <h3 style="font-style: italic; color: red;">User rquest failed! Try again</h3>
+
+            <br>
+            <form method="post" action="/sound/request">
+                <p> You need to fill in:</p>
+                
+                <label for="videoUrl">Youtube link:</label>
+                <input type="text" id="videoUrl" name="videoUrl"><br><br>
+                
+                <label for="keybinding">Key to press(keyboard a-ö):</label>
+                <input type="text" id="keybinding" name="keybinding"><br><br>
+                
+                <label for="startTime">Start time of clip:</label>
+                <input type="text" id="startTime" name="startTime"><br><br>
+                
+                <label for="endTime">End time of clip:</label>
+                <input type="text" id="endTime" name="endTime"><br><br>
+                <input type="submit" name="submitButton" value="Submit">
+            </form>
+        </div>
+    </body>
+</html>

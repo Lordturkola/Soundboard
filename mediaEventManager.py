@@ -1,27 +1,37 @@
-from queue import Queue
-from pathlib import path
-from time import sleep
 import sys
+from mediaManager import MediaManager
 
 sys.path.append("webapp")
 # class imports
 from webapp import WebApp
 from mediaItem import MediaItem
-from mediaBuilder import MediaBuilder
+from pipeline.mediaBuilder import MediaBuilder
 
 
 class MediaEventManager:
+    request_limit = 10
+    request_counter = 0
+    mediaManager = MediaManager()
 
-    def __init__(self) -> None:
-        ## workflow
-        # event manager recieves an external request
-        # gets populated by incoming ssh messages and/or webrequsts
-        self.media_processing_queue = Queue(100)
-        self.previous_amount_of_items = 0
-        self.file_polling_interval = 1
+    def start_media_manager():
+        MediaEventManager.mediaManager.start()
 
-    def add_to_build_queue(self, new_request):
+    def update(media_item: MediaItem):
+        MediaEventManager.mediaManager.update(media_item)
+
+    def build_media(new_request_form: dict) -> bool:
+        MediaEventManager.request_counter += 1
+        if MediaEventManager.request_counter > MediaEventManager.request_limit:
+            return False
+
         try:
-            self.media_processing_queue.put_nowait(new_request)
-        except Queue.full:
-            print("Queue is full and cannot receive another request")
+            media_item = MediaBuilder(new_request_form)
+            MediaEventManager.update(media_item)
+            MediaEventManager.request_counter -= 1
+
+        except Exception as e:
+            MediaEventManager.request_counter -= 1
+            print(f"error processing request{e}")
+            return False
+
+        return True

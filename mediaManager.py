@@ -2,6 +2,7 @@ from pynput import keyboard
 import vlc
 from time import sleep
 from threading import Thread
+from pipeline.pipelineItems.model.mediaItem import MediaItem
 
 
 class MediaManager:
@@ -40,9 +41,6 @@ class MediaManager:
             print("finally stopping video")
             self.stop_media(vlc.EventType.MediaPlayerEndReached)
 
-    def start_screen(self, key):
-        pass
-
     def stop_media(self, event):
         print("stopping video")
         self.playing = False
@@ -66,7 +64,10 @@ class MediaManager:
             # stop video prematurely
             return False
 
-    def listen_to_keypress(self):
+    def update(self, mediaItem: MediaItem):
+        self.media_key_map[mediaItem.key_bindning] = mediaItem.file_path
+
+    def start(self):
         # Collect events until released
         with keyboard.Listener(
             on_press=self.on_press, on_release=self.on_release
@@ -76,4 +77,4 @@ class MediaManager:
 
 if __name__ == "__main__":
     mm = MediaManager()
-    mm.listen_to_keypress()
+    mm.start()
