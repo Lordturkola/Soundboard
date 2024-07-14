@@ -5,7 +5,7 @@ import shutil, sys, os
 current = os.path.abspath(os.curdir)
 env = os.path.join(current, "environment", "soundboard")
 
-ffmpeg_env = os.path.join(current, "environment", "ffmpeg", "bin", "*")
+ffmpeg_env = os.path.join(current, "ffmpeg", "bin", "*")
 dst = os.path.join(env, "Lib", "site-packages", "yt_dlp")
 reqs_path = os.path.join(current, "environment", "requirements.txt")
 winVenvPath = os.path.join(env, "Scripts", "Activate.bat")
