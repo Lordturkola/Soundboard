@@ -1,57 +1,72 @@
 from pynput import keyboard
-import pygame
-
-import os
+import vlc
+from time import sleep
 
 
 class MediaManager:
     def __init__(self):
-        self.sound_map = {
-            "k": "its_working.wav",
-            "n": "no_darth.wav",
-            "v": "varskrik.wav",
-            "b": "bbbad.wav",
-            "f": "lotr_br_q.wav",
-            "c": "cmon.wav",
-            "h": "hastalavista_trimmed.wav",
-            "w": "whatgoingon.wav",
-            "g": "goood.wav",
-            "r": "rockapa.wav",
-            "i": "iwanttobreakfree.wav",
-            "d": "doit.mp3",
+        self.media_key_map = {
+            "f": "C:\\Users\\andre\\GIT_PROJECTS_FUUUCK\\Soundboard\\media\\f\\media_file_f.webm"
         }
-        self.sound_file_folder = os.path.curdir
+        self.media_instance = vlc.Instance(["--video-on-top"])
+        self.media_player = self.media_instance.media_player_new()
+        self.media_player.set_fullscreen(True)
+        self.playing = False
 
-    def play_sound(self, keyboardKey):
-
+    def play_media(self, key):
+        self.playing = True
         try:
-            path = os.path.join(sound_file_folder, sound_map[keyboardKey])
-            print(path)
-            pygame.mixer.init()
-            pygame.mixer.music.load(path)
-            pygame.mixer.music.play()
+            media = self.media_instance.media_new(self.media_key_map[key])
+            self.media_player.set_media(media)
+            events = self.media_player.event_manager()
+            events.event_attach(
+                vlc.EventType.MediaPlayerEndReached,
+                self.stop_media,
+            )
+            self.media_player.play()
+            while self.playing:
+                sleep(0.5)
         except FileNotFoundError as e:
-            print(f"File not found to .wav! {e}")
+            print(f"File not found to media file {e}")
         except KeyError as e2:
-            print(f"No binding for pressed key: {keyboardKey}")
+            print(f"No binding for pressed key: {key}")
+        finally:
+            print("finally stopping video")
+            self.stop_media(vlc.EventType.MediaPlayerEndReached)
 
-    def on_press(key):
+    def start_screen(self, key):
+        pass
+
+    def on_press(self, key):
         try:
-            print("alphanumeric key {0} pressed".format(key.char))
-            play_sound(key.char)
+            str_key = str(key.char)
+            print("key pressed {0}".format(key.char))
+            print(self.media_key_map)
+            print(self.media_key_map.get(str_key, None))
+            if not self.playing and self.media_key_map.get(str_key, None) != None:
+                self.play_media(str_key)
         except AttributeError:
             print("special key {0} pressed".format(key))
 
-    def on_release(key):
+    def stop_media(self, event):
+        print("stopping video")
+        self.playing = False
+        self.media_player.stop()
+
+    def on_release(self, key):
         if key == keyboard.Key.esc:
             # Stop listener
+            # stop video prematurely
             return False
 
-    def start_listen(self):
+    def listen_to_keypress(self):
         # Collect events until released
-        with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
+        with keyboard.Listener(
+            on_press=self.on_press, on_release=self.on_release
+        ) as listener:
             listener.join()
 
-    if __name__ == "__main__":
-        mm = MediaManager()
-        mm.s
+
+if __name__ == "__main__":
+    mm = MediaManager()
+    mm.listen_to_keypress()
