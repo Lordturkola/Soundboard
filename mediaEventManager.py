@@ -24,20 +24,22 @@ class MediaEventManager:
 
     def build_media(new_request_form: dict) -> bool:
         MediaEventManager.request_counter += 1
+        print(f"request counter: {MediaEventManager.request_counter}")
         if MediaEventManager.request_counter > MediaEventManager.request_limit:
             return False
 
         try:
             media_item = MediaBuilder(new_request_form).process()
             print("updating media manager...")
-            MediaEventManager.update(media_item)
             MediaEventManager.request_counter -= 1
+            MediaEventManager.update(media_item)
 
         except Exception as e:
             MediaEventManager.request_counter -= 1
             print(f"error processing request{e}")
             return False
-
+        
+        MediaEventManager.request_counter -= 1
         return True
 
     if __name__ == "__main__":
