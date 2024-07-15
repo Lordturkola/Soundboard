@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 import sys, os
+from socket import gethostname, gethostbyname
 
 par_dir = os.path.abspath(os.path.curdir)
 print(par_dir)
@@ -26,6 +27,7 @@ class WebApp:
         return render_template("index.html")
 
     def start_server(debugMode=False):
+        print(f"current host:{gethostbyname(gethostname)}")
         WebApp.app.run(host="0.0.0.0", port=1337, debug=debugMode)
 
 
