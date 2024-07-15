@@ -31,7 +31,6 @@ class MediaEventManager:
         try:
             media_item = MediaBuilder(new_request_form).process()
             print("updating media manager...")
-            MediaEventManager.request_counter -= 1
             MediaEventManager.update(media_item)
 
         except Exception as e:
