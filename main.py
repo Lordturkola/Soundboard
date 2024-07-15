@@ -10,7 +10,7 @@ ffmpeg_env = os.path.join(current, "ffmpeg", "bin", "*")
 dstWin = os.path.join(env, "Lib", "site-packages", "yt_dlp")
 python_ver_num = sys.version.split()[0].split(".")
 python_ver = f"python{python_ver_num[0]}.{python_ver_num[1]}"
-dstLinux = os.path.join(env, "lib", python_ver_num, "site-packages", "yt_dlp")
+dstLinux = os.path.join(env, "lib", python_ver, "site-packages", "yt_dlp")
 reqs_path = os.path.join(current, "environment", "requirements.txt")
 winVenvPath = os.path.join(env, "Scripts", "Activate.bat")
 linuxVenvPath = os.path.join(env, "bin", "activate")
@@ -25,13 +25,18 @@ shell_command = {
 if __name__ == "__main__":
     print(current)
     print(f"src:{ffmpeg_env}")
-    print(f"dst:{dst}")
+    print(f"dst:{dstLinux}")
+    print(f"dst:{dstWin}")
     print(env)
     print(winVenvPath)
     print(linuxVenvPath)
     print(reqs_path)
-    print(os.system)
-    if os.system == "win32" or os.system == "cygwin":
+    print(f"OS system: {sys.platform}")
+    print("installing dependencies")
+    os.system(shell_command["pip"])
+    print("installing dependencies")
+    print("copying ffmpeg bin to venv (third party dependency)")
+    if sys.platform == "win32" or sys.platform == "cygwin":
         os.system(shell_command["cp_win32"])
     else:
         os.system(shell_command["cp_linux"])
