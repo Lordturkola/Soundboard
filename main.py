@@ -34,9 +34,11 @@ if __name__ == "__main__":
     print("installing dependencies")
     print("copying ffmpeg bin to venv (third party dependency)")
     if sys.platform == "win32" or sys.platform == "cygwin":
-        os.system(shell_command["cp_win32"])
+        if not os.path.exists(dstLinux):
+            os.system(shell_command["cp_win32"])
     else:
-        os.system(shell_command["cp_linux"])
+        if not os.path.exists(dstWin):
+            os.system(shell_command["cp_linux"])
 
     from webapp.app import WebApp
     from mediaEventManager import MediaEventManager
