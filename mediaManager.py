@@ -14,6 +14,7 @@ class MediaManager:
         self.media_player = self.media_instance.media_player_new()
         self.media_player.set_fullscreen(True)
         self.media_player.video_set_key_input(True)
+        self.startup_time = 2
         self.playing = False
 
     def play_media(self, key):
@@ -29,6 +30,7 @@ class MediaManager:
             )
 
             self.media_player.play()
+            sleep(self.startup_time)
             while self.playing:
                 print("is playing")
                 sleep(0.5)
