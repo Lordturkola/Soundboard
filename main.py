@@ -1,7 +1,4 @@
 import sys, os
-from webapp.app import WebApp
-from mediaEventManager import MediaEventManager
-from threading import Thread
 
 current = os.path.abspath(os.curdir)
 env = os.path.join(current, "environment", "soundboard")
@@ -40,6 +37,10 @@ if __name__ == "__main__":
         os.system(shell_command["cp_win32"])
     else:
         os.system(shell_command["cp_linux"])
+
+    from webapp.app import WebApp
+    from mediaEventManager import MediaEventManager
+    from threading import Thread
 
     t2 = Thread(target=WebApp.start_server, args=())
     t2.start()
