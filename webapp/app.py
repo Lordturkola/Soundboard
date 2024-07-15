@@ -26,7 +26,7 @@ class WebApp:
         return render_template("index.html")
 
     def start_server(debugMode=False):
-        WebApp.app.run(debug=debugMode, port=1337)
+        WebApp.app.run(host="0.0.0.0", port=1337, debug=debugMode)
 
 
 if __name__ == "__main__":

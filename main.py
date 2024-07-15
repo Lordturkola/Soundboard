@@ -14,7 +14,7 @@ linuxVenvPath = os.path.join(env, "bin", "activate")
 shell_command = {
     "src_win32": f"CALL {winVenvPath}",
     "cp_win32": f"copy {ffmpeg_env} {dstWin}",
-    "cp_linux": f"cp {ffmpeg_env} {dstWin}",
+    "cp_linux": f"cp {ffmpeg_env} {dstLinux}",
     "src_linux": f"source {linuxVenvPath}",
     "venv": f"python3 -m venv {env}",
     "pip": f"pip install -r {reqs_path}",
