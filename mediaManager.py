@@ -21,6 +21,7 @@ class MediaManager:
         self.playing = True
         try:
             media = self.media_instance.media_new_path(self.media_key_map[key])
+            media.add_option('start-time=0.0')
             self.media_player.set_media(media)
 
             events = self.media_player.event_manager()
@@ -30,7 +31,6 @@ class MediaManager:
             )
 
             self.media_player.play()
-            sleep(5)
             while self.playing:
                 print("is playing")
                 sleep(0.5)
