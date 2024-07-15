@@ -1,6 +1,4 @@
-import json
 import sys, os
-from os.path import dirname
 
 current_dir = os.path.abspath(os.path.curdir)
 sys.path.append(os.path.join(current_dir, "model"))
@@ -14,6 +12,7 @@ MEDIA_DIR = os.path.join(current_dir, "media")
 
 
 class FetchMedia(IMediaPipelineItem):
+    media_format = "mp4"
 
     def validate(mediaItem: MediaItem) -> None:
         if mediaItem.video_url == None:
@@ -32,9 +31,9 @@ class FetchMedia(IMediaPipelineItem):
         print(media_folder)
         if not os.path.exists(media_folder):
             os.mkdir(media_folder)
-
         filepath = os.path.join(
-            media_folder, f"media_file_{mediaItem.key_bindning}.webm"
+            media_folder,
+            f"media_file_{mediaItem.key_bindning}.{FetchMedia.media_format}",
         )
 
         mediaItem.file_path = filepath
@@ -45,6 +44,7 @@ class FetchMedia(IMediaPipelineItem):
             ),
             "outtmpl": filepath,
             "overwrites": True,
+            "format": f"{FetchMedia.media_format}[height=360]",
         }
         with YoutubeDL(params=options) as ytdl:
             error_code = ytdl.download(mediaItem.video_url)

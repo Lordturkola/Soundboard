@@ -7,10 +7,7 @@ from pipeline.pipelineItems.model.mediaItem import MediaItem
 
 class MediaManager:
     def __init__(self):
-        self.media_key_map = {
-            "f": "C:\\Users\\andre\\GIT_PROJECTS_FUUUCK\\Soundboard\\media\\f\\media_file_f.webm",
-            "b": "C:\\Users\\andre\\GIT_PROJECTS_FUUUCK\\Soundboard\\media\\b\\media_file_b.webm",
-        }
+        self.media_key_map = {}
         self.media_instance = vlc.Instance(
             ["--video-on-top", "--play-and-exit", "vlc://quit", "--play-and-stop"]
         )
@@ -36,7 +33,7 @@ class MediaManager:
                 print("is playing")
                 sleep(0.5)
         except Exception as e:
-            print(f"an error {e} occured whie trying to play")
+            print(f"an error {e} occured while trying to play")
         finally:
             print("finally stopping video")
             self.stop_media(vlc.EventType.MediaPlayerEndReached)
@@ -50,7 +47,6 @@ class MediaManager:
             str_key = str(key.char)
             print("key pressed {0}".format(key.char))
             # print(self.media_key_map)
-            print(self.playing)
             if not self.playing and self.media_key_map.get(str_key, None) != None:
                 print("starting task")
                 task = Thread(target=self.play_media, args=(str_key,))
