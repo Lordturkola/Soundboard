@@ -7,14 +7,17 @@ current = os.path.abspath(os.curdir)
 env = os.path.join(current, "environment", "soundboard")
 
 ffmpeg_env = os.path.join(current, "ffmpeg", "bin", "*")
-dst = os.path.join(env, "Lib", "site-packages", "yt_dlp")
+dstWin = os.path.join(env, "Lib", "site-packages", "yt_dlp")
+python_ver_num = sys.version.split()[0].split(".")
+python_ver = f"python{python_ver_num[0]}.{python_ver_num[1]}"
+dstLinux = os.path.join(env, "lib", python_ver_num, "site-packages", "yt_dlp")
 reqs_path = os.path.join(current, "environment", "requirements.txt")
 winVenvPath = os.path.join(env, "Scripts", "Activate.bat")
 linuxVenvPath = os.path.join(env, "bin", "activate")
 shell_command = {
     "src_win32": f"CALL {winVenvPath}",
-    "cp_win32": f"copy {ffmpeg_env} {dst}",
-    "cp_linux": f"cp {ffmpeg_env} {dst}",
+    "cp_win32": f"copy {ffmpeg_env} {dstWin}",
+    "cp_linux": f"cp {ffmpeg_env} {dstWin}",
     "src_linux": f"source {linuxVenvPath}",
     "venv": f"python3 -m venv {env}",
     "pip": f"pip install -r {reqs_path}",
@@ -28,12 +31,11 @@ if __name__ == "__main__":
     print(linuxVenvPath)
     print(reqs_path)
     print(os.system)
-    # if os.system == "win32" or os.system == "cygwin":
-    #      os.system(shell_command["cp_win32"])
-    # else:
-    # os.system(shell_command["cp_linux"])
+    if os.system == "win32" or os.system == "cygwin":
+        os.system(shell_command["cp_win32"])
+    else:
+        os.system(shell_command["cp_linux"])
 
-    #
     t2 = Thread(target=WebApp.start_server, args=())
     t2.start()
     t1 = Thread(target=MediaEventManager.start_media_manager, args=())
