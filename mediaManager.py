@@ -9,7 +9,7 @@ class MediaManager:
     def __init__(self):
         self.media_key_map = {}
         self.media_instance = vlc.Instance(
-            ["--video-on-top", "--play-and-exit", "vlc://quit", "--play-and-stop"]
+            ["--video-on-top"]
         )
         self.media_player = self.media_instance.media_player_new()
         self.media_player.set_fullscreen(True)
