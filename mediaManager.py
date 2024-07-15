@@ -60,7 +60,7 @@ class MediaManager:
         if key == keyboard.Key.esc:
             # Stop listener
             # stop video prematurely
-            return False
+            return True
 
     def update(self, mediaItem: MediaItem):
         self.media_key_map[mediaItem.key_bindning] = mediaItem.file_path
