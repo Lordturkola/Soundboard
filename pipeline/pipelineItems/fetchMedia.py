@@ -1,6 +1,8 @@
 import sys, os
 
-current_dir = os.path.abspath(os.path.curdir)
+current_dir = os.path.abspath(__file__)
+current_dir = os.path.dirname(current_dir)
+print(f"curr {current_dir}")
 sys.path.append(os.path.join(current_dir, "model"))
 sys.path.append(os.path.join(current_dir, "interfaces"))
 
@@ -8,11 +10,11 @@ from iMediaPipelineItem import IMediaPipelineItem
 from mediaItem import MediaItem
 from yt_dlp import YoutubeDL, utils
 
-MEDIA_DIR = os.path.join(current_dir, "media")
-
+mediadir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+MEDIA_DIR = os.path.join(mediadir, "media")
+print(MEDIA_DIR)
 
 class FetchMedia(IMediaPipelineItem):
-    media_format = "mp4"
 
     def validate(mediaItem: MediaItem) -> None:
         if mediaItem.video_url == None:
@@ -33,33 +35,36 @@ class FetchMedia(IMediaPipelineItem):
             os.mkdir(media_folder)
         filepath = os.path.join(
             media_folder,
-            f"media_file_{mediaItem.key_bindning}.{FetchMedia.media_format}",
+            f"media_file_{mediaItem.key_bindning}_",
         )
-
-        mediaItem.file_path = filepath
 
         options = {
             "download_ranges": utils.download_range_func(
                 [], [[mediaItem.start_time, mediaItem.end_time]]
             ),
-            "outtmpl": filepath,
+            "outtmpl": filepath+"%(format_id)s.%(ext)s",
             "overwrites": True,
-            "format": f"{FetchMedia.media_format}[height=360]",
+            "format":"worst*[vcodec!=none][acodec!=none]"
         }
         with YoutubeDL(params=options) as ytdl:
             error_code = ytdl.download(mediaItem.video_url)
+        
+        print(os.listdir(media_folder))
+        mediaItem.file_path = os.path.join(media_folder, os.listdir(media_folder)[0])
+
         print("fetch media success")
         return mediaItem
-
+    
+                  
 
 if __name__ == "__main__":
     mediaItem = FetchMedia.process(
         MediaItem(
-            videourl="https://www.youtube.com/watch?v=4gcs5k8n-FY&ab_channel=SoundEffects",
-            start_time=0.0,
-            end_time=1.0,
+            video_url="https://www.youtube.com/watch?v=B1xXjF5M8R4&ab_channel=ItsBSD",
+            start_time=14,
+            end_time=15,
             file_path=None,
-            key_bindning="b",
+            key_bindning="x",
         )
     )
     print(mediaItem.file_path)

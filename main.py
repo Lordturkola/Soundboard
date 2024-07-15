@@ -7,7 +7,7 @@ ffmpeg_env = os.path.join(current, "ffmpeg", "bin", "*")
 dstWin = os.path.join(env, "Lib", "site-packages", "yt_dlp")
 python_ver_num = sys.version.split()[0].split(".")
 python_ver = f"python{python_ver_num[0]}.{python_ver_num[1]}"
-dstLinux = os.path.join(env, "lib", python_ver, "site-packages", "yt_dlp")
+dstLinux = os.path.join(env, "lib", python_ver, "site-packages", "yt_dlp", "ffmpeg")
 reqs_path = os.path.join(current, "environment", "requirements.txt")
 winVenvPath = os.path.join(env, "Scripts", "Activate.bat")
 linuxVenvPath = os.path.join(env, "bin", "activate")
@@ -31,14 +31,20 @@ if __name__ == "__main__":
     print(f"OS system: {sys.platform}")
     print("installing dependencies")
     os.system(shell_command["pip"])
-    print("installing dependencies")
-    print("copying ffmpeg bin to venv (third party dependency)")
+    print("additional dependencies")
     if sys.platform == "win32" or sys.platform == "cygwin":
-        if not os.path.exists(dstLinux):
-            os.system(shell_command["cp_win32"])
-    else:
         if not os.path.exists(dstWin):
+            print("copying ffmpeg bin to venv (third party dependency)")
+            os.system(shell_command["cp_win32"])
+        else:
+            print("already exists")
+
+    else:
+        if not os.path.exists(dstLinux):
+            print("copying ffmpeg bin to venv (third party dependency)")
             os.system(shell_command["cp_linux"])
+        else:
+            print("already exists")
 
     from webapp.app import WebApp
     from mediaEventManager import MediaEventManager
