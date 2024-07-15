@@ -28,10 +28,10 @@ if __name__ == "__main__":
     print(linuxVenvPath)
     print(reqs_path)
     print(os.system)
-    if os.system == "win32" or os.system == "cygwin":
-        os.system(shell_command["cp_win32"])
-    else:
-        os.system(shell_command["cp_linux"])
+    # if os.system == "win32" or os.system == "cygwin":
+    #      os.system(shell_command["cp_win32"])
+    # else:
+    # os.system(shell_command["cp_linux"])
 
     #
     t2 = Thread(target=WebApp.start_server, args=())
