@@ -30,7 +30,7 @@ class MediaManager:
             )
 
             self.media_player.play()
-            sleep(self.startup_time)
+            sleep(5)
             while self.playing:
                 print("is playing")
                 sleep(0.5)
