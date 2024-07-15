@@ -27,7 +27,7 @@ class WebApp:
         return render_template("index.html")
 
     def start_server(debugMode=False):
-        print(f"current host:{gethostbyname(gethostname)}")
+        print(f"current host:{gethostbyname(gethostname())}")
         WebApp.app.run(host="0.0.0.0", port=1337, debug=debugMode)
 
 
