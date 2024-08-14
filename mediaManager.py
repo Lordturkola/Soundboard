@@ -8,9 +8,7 @@ from pipeline.pipelineItems.model.mediaItem import MediaItem
 class MediaManager:
     def __init__(self):
         self.media_key_map = {}
-        self.media_instance = vlc.Instance(
-            ["--video-on-top"]
-        )
+        self.media_instance = vlc.Instance(["--video-on-top"])
         self.media_player = self.media_instance.media_player_new()
         self.media_player.set_fullscreen(True)
         self.media_player.video_set_key_input(True)
@@ -21,7 +19,8 @@ class MediaManager:
         self.playing = True
         try:
             media = self.media_instance.media_new_path(self.media_key_map[key])
-            media.add_option('start-time=0.0')
+            media.add_option("start-time=0.0")
+            media.add_option("--file-caching=60000")
             self.media_player.set_media(media)
 
             events = self.media_player.event_manager()

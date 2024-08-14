@@ -14,6 +14,7 @@ mediadir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 MEDIA_DIR = os.path.join(mediadir, "media")
 print(MEDIA_DIR)
 
+
 class FetchMedia(IMediaPipelineItem):
 
     def validate(mediaItem: MediaItem) -> None:
@@ -42,20 +43,18 @@ class FetchMedia(IMediaPipelineItem):
             "download_ranges": utils.download_range_func(
                 [], [[mediaItem.start_time, mediaItem.end_time]]
             ),
-            "outtmpl": filepath+"%(format_id)s.%(ext)s",
+            "outtmpl": filepath + "%(format_id)s.%(ext)s",
             "overwrites": True,
-            "format":"worst*[vcodec!=none][acodec!=none]"
         }
         with YoutubeDL(params=options) as ytdl:
             error_code = ytdl.download(mediaItem.video_url)
-        
+
         print(os.listdir(media_folder))
         mediaItem.file_path = os.path.join(media_folder, os.listdir(media_folder)[0])
 
         print("fetch media success")
         return mediaItem
-    
-                  
+
 
 if __name__ == "__main__":
     mediaItem = FetchMedia.process(
